@@ -1,0 +1,16 @@
+# General
+*.swp
+*~
+*.tmp
+tmp/
+swp/
+.swp/
+*.bak
+
+# Mac OS X
+.DS_Store
+__MACOSX
+
+# Windows
+Thumbs.db
+desktop.ini
