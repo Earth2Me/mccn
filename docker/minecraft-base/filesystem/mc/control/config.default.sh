@@ -33,6 +33,8 @@ config=(
 	[input_stream]="${dirs[tmp]}/input.stream"
 	[output_stream]="${dirs[tmp]}/output.stream"
 
+	[pid_file]="${dirs[tmp]}/server.pid"
+
 	#
 	#
 	# }}}
@@ -46,4 +48,8 @@ config=(
 # Use this format to add additional java arguments.  Note the += operator.
 # Don't add -Xms or -Xmx!  Those are added automatically.
 config_java_args+=(
+)
+
+# These get passed to the JAR (CraftBukkit, Spigot, etc.).
+config_server_args+=(
 )

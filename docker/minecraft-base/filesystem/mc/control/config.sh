@@ -44,7 +44,8 @@ if [ ! -r "$local_config" ]; then
 fi
 
 declare -A config
-declare -a config_java_args=( )
+declare -a config_java_args='( )'
+declare -a config_server_args='( )'
 
 source "$default_config"
 source "$local_config"
@@ -52,6 +53,7 @@ source "$local_config"
 config_java_args+=(
 	"-Xms${config[java_min_heap]}"
 	"-Xmx${config[java_max_heap]}"
+	-jar "${config[jar]}"
 )
 
 
