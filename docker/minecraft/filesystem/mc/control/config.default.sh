@@ -13,7 +13,8 @@ config=(
 	[jar]='server.jar'
 
 	# Path to a specific java binary.  Recommended to use update-alternatives
-	# instead of changing this.
+	# instead of changing this.  $PATH will be used, so there's no need for a
+	# full path.
 	[java]=java
 
 	# Memory available for the JVM heap.  You can use $memory_kb and $memory_mb
@@ -22,17 +23,32 @@ config=(
 	# considered sane values for typical servers, with a 2 GiB memory cap.  If
 	# you need more than that, either you have hundreds of players, or you're
 	# doing something wrong.
-	[java_min_heap]=$default_min_heap
-	[java_max_heap]=$default_max_heap
+	[java_min_heap]="$default_min_heap"
+	[java_max_heap]="$default_max_heap"
+
+
+	# Since rdiff-backup provides an incremental backup system, if you change
+	# backup interval, each individual backup will actually be larger.  You
+	# won't save much space by increasing the delay.  However, you should ensure
+	# that the backup_path volume (typically /mc/backup) maps to a traditional
+	# HDD on the host, not an SSD.
+	#
+	# Lower intervals will be more streamlined: saves won't take as long.  Set
+	# backup_wait to the maximum duration of a save-all.
+	[backup_interval]=15m
+	[backup_path]="${dirs[backup]}"
+	[backup_wait]=1m
 
 
 	# You shouldn't need to mess with this stuff. {{{
 	#
 	#
 
-	[input_stream]="${dirs[tmp]}/input.stream"
-	[output_stream]="${dirs[tmp]}/output.stream"
+	# If the server doesn't shut down without this amount of time, kill it with
+	# SIGKILL.
+	[forcekill_timeout]='30s'
 
+	# Used to manage the server processes.
 	[pid_file]="${dirs[tmp]}/server.pid"
 
 	#

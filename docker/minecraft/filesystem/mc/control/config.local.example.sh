@@ -1,6 +1,10 @@
 #!/bin/bash
-# Copy this to config.local.sh.  DO NOT rename it, or you will break updates.
-# Use config.default.sh as a reference to configure the application.
+# Copy this to config.local.sh IN YOUR SERVER VOLUME--not this directory.  DO
+# NOT rename this file, or you will break updates.  For that matter, do not
+# touch anything in this directory.
+#
+# You should be COPYING this file to: /mc/server/config.local.sh
+# Use config.default.sh as a REFERENCE ONLY.
 
 # If you're running several containers on the same server, you'll want to adjust
 # these appropriately.

@@ -4,20 +4,21 @@
 
 # Setup {{{1
 #     Don't touch this section; it's used to automatically determine some
-#     configuration values.
+#     configuration values.  Starred items have dedicated volumes.
 
 declare -rA dirs
-dirs[control]="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # /mc/control/
-dirs[mc]="$(cd "${dirs[control]}" && cd .. && pwd)"            # /mc/
-dirs[server]="$(cd "${dirs[mc]}" && cd server && pwd)"         # /mc/server/
-dirs[tmp]="$(cd "${dirs[mc]}" && cd tmp && pwd)"               # /mc/tmp/
+dirs[control]="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  #   /mc/control/
+dirs[mc]="$(cd "${dirs[control]}" && cd .. && pwd)"            #   /mc/
+dirs[server]="$(cd "${dirs[mc]}" && cd server && pwd)"         # * /mc/server/
+dirs[tmp]="$(cd "${dirs[mc]}" && cd tmp && pwd)"               # * /mc/tmp/
+dirs[backup]="$(cd "${dirs[mc]}" && cd backup && pwd)"         # * /mc/backup/
 
 # Calculate default heap sizes
 memory_kb="$(awk '/MemTotal/{print $2}' /proc/meminfo)"
 let memory_mb = $memory_kb / 1024
 if [ $memory_mb -lt 2048 ]; then
-	[ $memory_mb -gt 512 ] && default_min_heap=256 || let default_min_heap = $memory_mb / 2
-	let default_max_heap = $memory_mb - $default_min_heap
+	[ $memory_mb -gt 512 ] && default_min_heap=256 || (( default_min_heap = memory_mb / 2 ))
+	(( default_max_heap = memory_mb - default_min_heap ))
 	default_min_heap="${default_min_heap}M"
 	default_max_heap="${default_max_heap}M"
 else
@@ -31,7 +32,7 @@ fi
 #
 
 readonly default_config="${dirs[control]}/config.default.sh"
-readonly local_config="${dirs[control]}/config.local.sh"
+readonly local_config="${dirs[server]}/config.local.sh"
 
 if [ ! -r "$default_config" ]; then
 	echo 'The default configuration file is missing; you should not edit or remove it.' >&2
