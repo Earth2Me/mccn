@@ -1,15 +1,16 @@
 # Nginx and PHP-FPM
 #
-# Volumes are /conf and /var/log. Put your per-instance configuration files in
-# /conf; for shared configuration files, use /etc/nginx and /etc/php5.
+# Volumes are /conf, /sites, and /var/log. Put your per-instance configuration
+# files in /conf; for shared configuration files, use /etc/nginx and /etc/php5.
 # Unfortunately, there's no include directive in php.ini, so there's no
-# /conf/php5-fpm directory.
+# /conf/php5-fpm directory.  You can put your website files in /sites (not
+# configuration files).
 #
 # VERSION 1.0.0
 FROM stackbrew/ubuntu:saucy
 MAINTAINER Paul Buonopane <paul+docker@earth2me.com>
 
-VOLUME [ "/conf", "/var/log" ]
+VOLUME [ "/conf", "/var/log", "/sites" ]
 
 # Ensure that we are up-to-date
 RUN apt-get update
