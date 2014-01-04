@@ -22,12 +22,8 @@ config_java_args+=(
 
 # Files that need to be parsed for variables
 config_var_files+=(
-	bukkit.yml
 )
 
 # Variables exposed to var files
 config_var_file_vars+=(
-	# If you had an instance aliased "mysql":
-	MYSQL_PORT_3306_TCP_ADDR
-	MYSQL_PORT_3306_TCP_PORT
 )
