@@ -25,4 +25,4 @@ RUN echo 'include /conf/nginx/*;' > /etc/nginx/conf.d/docker.conf
 RUN apt-get install -y php-pear php5-json php5-mysqlnd php5-gd php5-curl php5-imagick php5-memcache php5-memcached
 
 # Run in foreground
-CMD [ -d /conf/nginx ] || mkdir /conf/nginx; php5-fpm -FR & nginx -g "daemonize off;" & wait
+CMD [ -d /conf/nginx ] || mkdir /conf/nginx; [ -d /var/log/nginx ] || mkdir /var/log/nginx; php5-fpm -FR & nginx -g "daemonize off;" & wait
