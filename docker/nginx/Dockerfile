@@ -26,4 +26,4 @@ RUN echo 'include /conf/nginx/*;' > /etc/nginx/conf.d/docker.conf
 RUN apt-get install -y php-pear php5-json php5-mysqlnd php5-gd php5-curl php5-imagick php5-memcache php5-memcached
 
 # Run in foreground
-CMD mkdir -p /conf/nginx /var/log/nginx; chown -R www-data:www-data /sites; chmod g+s /sites; php5-fpm -FR & nginx -g "daemon off;" & wait
+CMD mkdir -p /conf/nginx /var/log/nginx; php5-fpm -FR & nginx -g "daemon off;" & wait
