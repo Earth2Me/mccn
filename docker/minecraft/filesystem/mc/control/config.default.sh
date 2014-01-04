@@ -69,3 +69,21 @@ config_java_args+=(
 # These get passed to the JAR (CraftBukkit, Spigot, etc.).
 config_server_args+=(
 )
+
+# These files will be parsed for environment variables.  This allows you to
+# use Docker's environment variables to configure settings such as MySQL server
+# information.  Files are relative to the server volume by default.  Variables
+# take the form ${SOMETHING}, where SOMETHING is a variable name.  Put your
+# template with variables in a file with a .var.yml file extension.  The
+# .var.yml file will be used to create a .yml file.  Leave out the .var part in
+# the array.  Works with file extensions other than .yml, too.
+config_var_files+=(
+	# Example:
+	#bukkit.yml    # Put your data in bukkit.var.yml
+)
+# These are the actual variables that are exposed to var files.
+config_var_file_vars+=(
+	# Example:
+	#MYSQL_PORT_3306_TCP_ADDR
+	#MYSQL_PORT_3306_TCP_PORT
+)

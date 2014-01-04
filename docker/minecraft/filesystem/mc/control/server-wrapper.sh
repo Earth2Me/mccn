@@ -82,8 +82,48 @@ function start_backups
 	return 0
 }
 
+function update_var_files
+{
+	pushd "${dirs[server]}" > /dev/null || return 1
+
+	local out_file= in_file= var= val= tmp_file=
+	for out_file in "${config_var_files[@]}"; do
+		in_file="${out_file%.*}"
+
+
+		for var in "${config_var_file_vars[@]}"; do
+			val="$$var"
+			val="${val//'\'/'\\'}"
+			val="${val//'"'/'\"'}"
+			val="${val//'&'/'\&'}"
+
+			[ -n "$tmp_file" ] && rm "$tmp_file"
+			tmp_file="$(mktemp)"
+
+			awk '
+				{
+					gsub(/\$\{'"$var"'\}/, "'"$val"'")
+					print $0
+				}
+			' "$in_file" > "$tmp_file"
+
+			in_file="$tmp_file"
+		done
+
+		if [ -n "$tmp_file" ]; then
+			mv "$tmp_file" "$out_file"
+		else
+			cp "$in_file" "$out_file"
+		fi
+	done
+
+	popd > /dev/null
+}
+
 function run_server
 {
+	update_var_files
+
 	server_job=
 	backup_job=
 	is_backing_up=0

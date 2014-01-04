@@ -47,6 +47,8 @@ fi
 declare -A config
 declare -a config_java_args='( )'
 declare -a config_server_args='( )'
+declare -a config_var_files='( )'
+declare -a config_var_file_vars='( )'
 
 source "$default_config"
 source "$local_config"
